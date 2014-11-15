@@ -63,9 +63,9 @@ void SpiRAM::disable()
 
 // Byte transfer functions
 
-char SpiRAM::read_byte(int address)
+byte SpiRAM::read_byte(unsigned address)
 {
-  char read_byte;
+  byte read_byte;
 
   // Set byte mode
   _set_mode(BYTE_MODE);
@@ -73,15 +73,15 @@ char SpiRAM::read_byte(int address)
   // Write address, read data
   enable();
   _spi.transfer(READ);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   read_byte = _spi.transfer(0xFF);
   disable();
   
   return read_byte;
 }
 
-char SpiRAM::write_byte(int address, char data_byte)
+byte SpiRAM::write_byte(unsigned address, byte data_byte)
 {
   // Set byte mode
   _set_mode(BYTE_MODE);
@@ -89,8 +89,8 @@ char SpiRAM::write_byte(int address, char data_byte)
   // Write address, read data
   enable();
   _spi.transfer(WRITE);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   _spi.transfer(data_byte);
   disable();
 
@@ -99,7 +99,7 @@ char SpiRAM::write_byte(int address, char data_byte)
 
 // Page transfer functions. Bound to current page. Passing the boundary 
 //  will wrap to the beginning
-void SpiRAM::read_page(int address, char *buffer)
+void SpiRAM::read_page(unsigned address, byte *buffer)
 {
   int i;
 
@@ -109,15 +109,15 @@ void SpiRAM::read_page(int address, char *buffer)
   // Write address, read data
   enable();
   _spi.transfer(READ);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   for (i = 0; i < 32; i++) {
     buffer[i] = _spi.transfer(0xFF);
   }    
   disable();
 }
 
-void SpiRAM::write_page(int address, char *buffer)
+void SpiRAM::write_page(unsigned address, byte *buffer)
 {
   int i;
 
@@ -127,8 +127,8 @@ void SpiRAM::write_page(int address, char *buffer)
   // Write address, read data
   enable();
   _spi.transfer(WRITE);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   for (i = 0; i < 32; i++) {
     _spi.transfer(buffer[i]);
   }    
@@ -136,7 +136,7 @@ void SpiRAM::write_page(int address, char *buffer)
 }
 
 // Stream transfer functions. Ignores page boundaries.
-void SpiRAM::read_stream(int address, char *buffer, int length)
+void SpiRAM::read_stream(unsigned address, byte *buffer, int length)
 {
   int i;
 
@@ -146,15 +146,15 @@ void SpiRAM::read_stream(int address, char *buffer, int length)
   // Write address, read data
   enable();
   _spi.transfer(READ);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   for (i = 0; i < length; i++) {
     buffer[i] = _spi.transfer(0xFF);
   }    
   disable();
 }
 
-void SpiRAM::write_stream(int address, char *buffer, int length)
+void SpiRAM::write_stream(unsigned address, byte *buffer, int length)
 {
   int i;
 
@@ -164,8 +164,8 @@ void SpiRAM::write_stream(int address, char *buffer, int length)
   // Write address, read data
   enable();
   _spi.transfer(WRITE);
-  _spi.transfer((char)(address >> 8));
-  _spi.transfer((char)address);
+  _spi.transfer(address >> 8);
+  _spi.transfer(address);
   for (i = 0; i < length; i++) {
     _spi.transfer(buffer[i]);
   }    
@@ -174,7 +174,7 @@ void SpiRAM::write_stream(int address, char *buffer, int length)
 
 
 // Mode handling
-void SpiRAM::_set_mode(char mode)
+void SpiRAM::_set_mode(byte mode)
 {
   if (mode != _current_mode)
   {

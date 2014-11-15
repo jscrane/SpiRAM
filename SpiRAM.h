@@ -64,16 +64,16 @@ class SpiRAM
     SpiRAM(SPIClass &spi, byte ssPin);
     void enable();
     void disable();
-    char read_byte(int address);
-    char write_byte(int address, char data_byte);
-    void read_page(int address, char *buffer);
-    void write_page(int address, char *buffer);
-    void read_stream(int address, char *buffer, int length);
-    void write_stream(int address, char *buffer, int length);
+    byte read_byte(unsigned address);
+    byte write_byte(unsigned address, byte data_byte);
+    void read_page(unsigned address, byte *buffer);
+    void write_page(unsigned address, byte *buffer);
+    void read_stream(unsigned address, byte *buffer, int length);
+    void write_stream(unsigned address, byte *buffer, int length);
   private:
-    char _current_mode;
+    byte _current_mode;
     byte _ssPin;
-    void _set_mode(char mode); 
+    void _set_mode(byte mode); 
     SPIClass &_spi;
 };
 
