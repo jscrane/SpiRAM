@@ -17,8 +17,8 @@ read_byte	KEYWORD2
 write_byte	KEYWORD2
 read_page	KEYWORD2
 write_page	KEYWORD2
-read_stream KEYWORD2
-write_stream    KEYWORD2
+read_stream	KEYWORD2
+write_stream	KEYWORD2
 
 
 #######################################
